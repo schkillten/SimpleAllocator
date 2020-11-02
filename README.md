@@ -2,6 +2,8 @@ TODO rework the flow of malloc, right now I just try to find a suitable chunk, i
 
 TODO in the defragger, just write a sort algorithm for the linked list. Right now I throw each pointer into a buffer and use std::sort. I mainly did this just to test out the idea and see if it all works. It does work but the biggest issue is because I can't use any dynamic memory to defrag the linked list, I used a fix sized buffer and sort the linked list in batches. But I only do one pass, so only each independent batch is sorted, resulting in a poor defragment. If I wrote an algorithm to sort the linked list in place then I could get significantly better results when defragging, giving an overall performance boost I believe.
 
+TODO much more thoroughly test everything out. I'm doing a lot of pointer arithmetic and lots of explicit conversions. And some pretty tricky alignment stuff. So I just want to write some tests (aside from lots of manual tests I've done) to actually check the accuracy of everything.
+
 # SimpleAllocator
 An allocator I made in c++ for learning. The goal was to learn more about memory and allocators, and implement my own simple allocator.
 
