@@ -1,6 +1,6 @@
 TODO rework the flow of malloc, right now I just try to find a suitable chunk, if that fails I try to defrag the free list, then try to find a best fit again. If we still fail to find a chunk then we expand our memory pool with sbrk. Then try to find a best fit again. This is one of the weakest parts of my design so I really want to focus on finding a much more efficient solution.
 
-TODO in the defragger, just write a sort algorithm for the linked list. Right now I throw each pointer into a buffer and use std::sort. I mainly did this just to test out the idea and see if it all works. It does work but the biggest issue is because I can't use any dynamic memory to defrag the linked list, I used a fix sized buffer and sort the linked list in batches. But I only do one pass, so only each independent batch is sorted, resulting in a poor defragment. If I wrote an algorithm to sort the linked list in place then I could get significantly better results when defragging, giving an overall performance boost I believe.
+TODO in the defragmenter, just write a sort algorithm for the linked list. Right now I throw each pointer into a buffer and use std::sort. I mainly did this just to test out the idea and see if it all works. It does work but the biggest issue is because I can't use any dynamic memory to defrag the linked list, I used a fix sized buffer and sort the linked list in batches. But I only do one pass, so only each independent batch is sorted, resulting in a poor defragment. If I wrote an algorithm to sort the linked list in place then I could get significantly better results when defragging, giving an overall performance boost I believe.
 
 TODO much more thoroughly test everything out. I'm doing a lot of pointer arithmetic and lots of explicit conversions. And some pretty tricky alignment stuff. So I just want to write some tests (aside from lots of manual tests I've done) to actually check the accuracy of everything.
 
@@ -11,7 +11,7 @@ Implemented using sbrk and brk (for fun). It's stored as an explicit free list i
 
 My two favorite parts of the allocator were the defrager and the alignment features.
 
-# Defrager
+# Defragmenter
 
 Since we use an explicit free list, our linked list can be all over the place in heap memory. And as users ask for more memory and free memory, chunks will slowly become fragmented, causing longer scans of the free list and bloated memory since we will ask for more memory from sbrk if we cant find a chunk to meet a users request. Defragmenting can help fix this issue but going through the free list and merging nodes in the linked list that are directly adjacent to each other.
 
