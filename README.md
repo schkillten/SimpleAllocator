@@ -15,7 +15,7 @@ Since we use an explicit free list, our linked list can be all over the place in
 
 The solution that I came up with to defragment the free list is to sort the free list, then just do a single scan and merge any nodes that are directly adjacent to each other. Right now I use a fix sized buffer and throw in as many pointers as I can in the buffer and sort that buffer, then repeat that until I've scanned the entire linked list once. Then once everything is sorted I do another scan and try to merge nodes if they're directly adjacent.
 
-# Alignemnt
+# Alignment
 
 The goal of alignment is to return to the user a pointer whose address is basically a multiple of the desired alignment. This means that when we find a chunk of memory in our free list (linked list of unused chunks of memory) that we want to return to the user, and that chunk of memory isn't aligned to the desired alignment, we will have to add an offset from the beginning of the chunk to the nearest aligned address.
 
